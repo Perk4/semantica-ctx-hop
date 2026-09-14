@@ -1,10 +1,12 @@
-import assert from "node:assert/strict";
-import { execFile } from "node:child_process/promises";
+import { execFile } from "node:child_process";
 import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
+
+const execFileAsync = promisify(execFile);
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 
@@ -26,7 +28,7 @@ if (edges.length !== 1 || edges[0].o !== "Bob") {
 }
 `,
     );
-    await execFile(process.execPath, [consumerPath], { cwd: dir });
+    await execFileAsync(process.execPath, [consumerPath], { cwd: dir });
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
