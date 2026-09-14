@@ -52,4 +52,4 @@ The store is in memory. There is no HTTP server, CLI, product UI, or persistence
 
 ## Tests
 
-`npm test` runs `node --experimental-strip-types --test test/*.test.ts`.
+`npm test` builds `dist/` then runs `node --experimental-strip-types --test test/*.test.ts`. Consumers import compiled JS from `dist/` (`main` / `exports`), not TypeScript source.
